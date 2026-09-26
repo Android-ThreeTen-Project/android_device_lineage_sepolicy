@@ -12,6 +12,11 @@ endif
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
     device/lineage/sepolicy/qcom/private
 
+ifeq (,$(filter msm8974 msm8992 msm8994,$(TARGET_BOARD_PLATFORM)))
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
+    device/lineage/sepolicy/qcom/private-soter
+endif
+
 ifeq ($(TARGET_USES_PREBUILT_VENDOR_SEPOLICY), true)
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
     device/lineage/sepolicy/qcom/dynamic \
