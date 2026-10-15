@@ -12,6 +12,11 @@ endif
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
     device/lineage/sepolicy/qcom/private
 
+ifeq (,$(filter msm8974 msm8992 msm8994,$(TARGET_BOARD_PLATFORM)))
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
+    device/lineage/sepolicy/qcom/private-soter
+endif
+
 ifeq ($(TARGET_USES_PREBUILT_VENDOR_SEPOLICY), true)
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += \
     device/lineage/sepolicy/qcom/dynamic \
@@ -22,7 +27,12 @@ BOARD_VENDOR_SEPOLICY_DIRS += \
     device/lineage/sepolicy/qcom/vendor
 endif
 
-ifeq (,$(filter device/qcom/sepolicy-legacy-um/legacy/vendor/common device/qcom/sepolicy_vndr/legacy-um/legacy/vendor/common, $(BOARD_VENDOR_SEPOLICY_DIRS)))
+ifneq ($(filter msm8960 msm8226 msm8610 msm8974 apq8084 msm8909 msm8916 msm8952 msm8992 msm8994,$(TARGET_BOARD_PLATFORM)),)
+BOARD_VENDOR_SEPOLICY_DIRS += \
+    device/lineage/sepolicy/qcom/legacy-vendor
+endif
+
+ifeq (,$(filter device/qcom/sepolicy-legacy-um/legacy/vendor/common device/qcom/sepolicy_vndr/legacy-um/legacy/vendor/common device/lineage/sepolicy/qcom/legacy-vendor, $(BOARD_VENDOR_SEPOLICY_DIRS)))
 BOARD_SEPOLICY_M4DEFS += \
     custom_ab_block_device=vendor_custom_ab_block_device \
     display_vendor_data_file=vendor_display_vendor_data_file \
